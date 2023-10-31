@@ -1,0 +1,7 @@
+name: FarmWorlds
+version: ${project.version}
+main: de.glowman554.farmworld.FarmWorldMain
+api-version: 1.19
+author: Glowman554
+commands:
+  farm:
