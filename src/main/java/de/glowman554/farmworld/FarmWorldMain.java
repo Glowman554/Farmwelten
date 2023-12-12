@@ -28,6 +28,7 @@ public class FarmWorldMain extends JavaPlugin
 	private static Economy economy;
 	
 	private String rtpHead;
+	private String rtpCommand;
 
 	public void genericError(HumanEntity entity)
 	{
@@ -58,6 +59,8 @@ public class FarmWorldMain extends JavaPlugin
 		}
 		
 		rtpHead = config.getString("RTP.head");
+		rtpCommand = config.getString("RTP.command");
+
 	}
 
 	@Override
@@ -81,6 +84,7 @@ public class FarmWorldMain extends JavaPlugin
 		config.addDefault("WATER.head", "Stoniy");
 		
 		config.addDefault("RTP.head", "glowman434");
+		config.addDefault("RTP.command", "/rtp world world");
 
 		
 		config.options().copyDefaults(true);
@@ -143,5 +147,10 @@ public class FarmWorldMain extends JavaPlugin
 	public String getRtpHead()
 	{
 		return rtpHead;
+	}
+	
+	public String getRtpCommand()
+	{
+		return rtpCommand;
 	}
 }

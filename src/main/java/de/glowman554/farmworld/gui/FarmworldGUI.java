@@ -99,7 +99,7 @@ public class FarmworldGUI implements Listener
 			
 			if (rawSlot == rtpSlot)
 			{
-				((Player) e.getWhoClicked()).performCommand("/rtp world world");
+				((Player) e.getWhoClicked()).performCommand(FarmWorldMain.getInstance().getRtpCommand());
 				 e.getWhoClicked().closeInventory();
 				return;
 			}
