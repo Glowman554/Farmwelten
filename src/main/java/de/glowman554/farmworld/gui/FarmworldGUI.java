@@ -59,7 +59,7 @@ public class FarmworldGUI implements Listener
 		ItemStack rtpStack = new ItemStack(Material.PLAYER_HEAD);
 		SkullMeta rtpMeta = (SkullMeta) rtpStack.getItemMeta();
 		rtpMeta.setDisplayName("§aFreie Welt §aFreigeschalten");
-		rtpMeta.setOwner(FarmWorldMain.getInstance().getRtpHead());
+		rtpMeta.setOwningPlayer(Bukkit.getOfflinePlayer(FarmWorldMain.getInstance().getRtpHead()));
 		rtpStack.setItemMeta(rtpMeta);
 		
 		rtpSlot = 4 + line * 9;
@@ -74,7 +74,7 @@ public class FarmworldGUI implements Listener
 		itemMeta.setLore(Arrays.asList(String.format("§8Kaufe diese §cFarmwelt für §e%d§8", price)));
 		itemMeta.setDisplayName(String.format("%s §aLv%d §a%s", id.getDisplayName(), level, unlocked ? "Freigeschalten" : "Freischaltbar"));
 		
-		itemMeta.setOwner(id.getPlayerHeadName());
+		itemMeta.setOwningPlayer(Bukkit.getOfflinePlayer(id.getPlayerHeadName()));
 		
 		itemStack.setItemMeta(itemMeta);
 
