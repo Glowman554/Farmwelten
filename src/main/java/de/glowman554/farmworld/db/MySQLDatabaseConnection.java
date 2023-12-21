@@ -1,4 +1,4 @@
-package de.glowman554.farmworld;
+package de.glowman554.farmworld.db;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,13 +11,14 @@ import java.util.UUID;
 
 import org.yaml.snakeyaml.util.UriEncoder;
 
+import de.glowman554.farmworld.WorldId;
 import de.glowman554.farmworld.utils.FileUtils;
 
-public class DatabaseConnection
+public class MySQLDatabaseConnection implements DatabaseConnection
 {
 	private Connection connect = null;
 
-	public DatabaseConnection(String url, String database, String username, String password) throws ClassNotFoundException, SQLException, IOException
+	public MySQLDatabaseConnection(String url, String database, String username, String password) throws ClassNotFoundException, SQLException, IOException
 	{
 		connect = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s?user=%s&password=%s&autoReconnect=true", url, database, username, UriEncoder.encode(password)));
 
