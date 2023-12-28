@@ -1,8 +1,6 @@
 package de.glowman554.farmworld;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -33,12 +31,15 @@ public class FarmWorldMain extends JavaPlugin
 
 	private String rtpHead;
 	private String rtpCommand;
+	private String waterHead;
+	private String waterCommand;
 
 	public void genericError(HumanEntity entity)
 	{
 		entity.sendMessage("Es ist etwas schiefgelaufen versuche es erneut.");
 	}
 
+	@SuppressWarnings("unchecked")
 	private void loadWorldConfig()
 	{
 		for (WorldId id : WorldId.values())
@@ -64,7 +65,9 @@ public class FarmWorldMain extends JavaPlugin
 
 		rtpHead = config.getString("RTP.head");
 		rtpCommand = config.getString("RTP.command");
-
+		
+		waterHead = config.getString("WATER.head");
+		waterCommand = config.getString("WATER.command");
 	}
 
 	@Override
@@ -84,10 +87,9 @@ public class FarmWorldMain extends JavaPlugin
 		config.addDefault("FIRE.commands", new String[] {"say FIRE 1", "say FIRE 2", "say FIRE 3", "say FIRE 4", "say FIRE 5"});
 		config.addDefault("FIRE.head", "Light_2017");
 
-		config.addDefault("WATER.prices", new int[] {0, 15000, 125000});
-		config.addDefault("WATER.commands", new String[] {"say WATER 1", "say WATER 2", "say WATER 3"});
+		config.addDefault("WATER.command", "say WATER");
 		config.addDefault("WATER.head", "Stoniy");
-
+		
 		config.addDefault("RTP.head", "glowman434");
 		config.addDefault("RTP.command", "/rtp world world");
 
@@ -167,5 +169,15 @@ public class FarmWorldMain extends JavaPlugin
 	public String getRtpCommand()
 	{
 		return rtpCommand;
+	}
+	
+	public String getWaterHead()
+	{
+		return waterHead;
+	}
+	
+	public String getWaterCommand()
+	{
+		return waterCommand;
 	}
 }

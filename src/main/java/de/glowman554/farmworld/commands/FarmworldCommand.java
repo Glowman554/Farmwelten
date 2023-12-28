@@ -2,23 +2,17 @@ package de.glowman554.farmworld.commands;
 
 import java.sql.SQLException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.glowman554.farmworld.FarmWorldMain;
-import de.glowman554.farmworld.gui.FarmworldGUI;
+import de.glowman554.farmworld.gui.FarmworldMainGUI;
 
 public class FarmworldCommand implements CommandExecutor
 {
-	private FarmworldGUI gui = new FarmworldGUI();
-
-	public FarmworldCommand()
-	{
-		Bukkit.getServer().getPluginManager().registerEvents(gui, FarmWorldMain.getInstance());
-	}
+	private FarmworldMainGUI gui = new FarmworldMainGUI();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
