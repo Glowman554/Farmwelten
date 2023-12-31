@@ -96,4 +96,14 @@ public class SQLiteDatabaseConnection implements DatabaseConnection
 			throw new IllegalArgumentException("Player in database not found!");
 		}
 	}
+
+	@Override
+	public void scheduleUserTeleport(UUID uuid, WorldId id, int level) throws SQLException {
+		throw new RuntimeException("Not supported my sqlite database backend!");
+	}
+
+	@Override
+	public void scheduleUserTeleport(UUID uuid, String id) throws SQLException {
+		throw new RuntimeException("Not supported my sqlite database backend!");
+	}
 }

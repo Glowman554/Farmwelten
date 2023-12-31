@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import de.glowman554.farmworld.utils.BungeeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -78,6 +79,19 @@ public class FarmworldMainGUI implements Listener
 		inventory.setItem(rtpSlot, createItem("§a§lғʀᴇɪᴇ ᴡᴇʟᴛ", "§7ᴇʀᴋᴜɴᴅᴇ ᴇɪɴᴇ ɴᴏʀᴍᴀʟᴇ ᴍɪɴᴇᴄʀᴀғᴛ ᴡᴇʟᴛ ᴀʙᴇʀ\n§cᴀᴄʜᴛᴇ ᴀᴜғ Üʙᴇʀғᴀʟʟᴇ ᴜɴᴅ ᴋᴀᴛᴀsᴛʀᴏᴘʜᴇɴ§7.", FarmWorldMain.getInstance().getRtpHead()));
 	}
 
+	private boolean doCompanion(HumanEntity player, String id) {
+		if (FarmWorldMain.getInstance().getCompanionSupport()) {
+            try {
+                FarmWorldMain.getInstance().getDatabase().scheduleUserTeleport(player.getUniqueId(), id);
+				BungeeUtils.sendPlayer((Player) player, "mine");
+            } catch (SQLException e) {
+				FarmWorldMain.getInstance().genericError(player);
+				throw new RuntimeException(e);
+            }
+			return true;
+        }
+		return false;
+	}
 
 	@EventHandler
 	public void onPlayerInventoryClick(InventoryClickEvent e)
@@ -90,10 +104,14 @@ public class FarmworldMainGUI implements Listener
 
 			if (rawSlot == rtpSlot)
 			{
-				((Player) e.getWhoClicked()).performCommand(FarmWorldMain.getInstance().getRtpCommand());
+				if (!doCompanion(e.getWhoClicked(), "RTP")) {
+					((Player) e.getWhoClicked()).performCommand(FarmWorldMain.getInstance().getRtpCommand());
+				}
 				e.getWhoClicked().closeInventory();
 			} else if (rawSlot == waterSlot) {
-				((Player) e.getWhoClicked()).performCommand(FarmWorldMain.getInstance().getWaterCommand());
+				if (!doCompanion(e.getWhoClicked(), "WATER")) {
+					((Player) e.getWhoClicked()).performCommand(FarmWorldMain.getInstance().getWaterCommand());
+				}
 				e.getWhoClicked().closeInventory();
 			} else {
 				int level = (rawSlot - 10) / 2;

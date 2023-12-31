@@ -8,9 +8,9 @@ public class Payments
 {
 	public static boolean doPayment(Player player, double money)
 	{
-		if (FarmWorldMain.getEconomy().has(player, money))
+		if (FarmWorldMain.getInstance().getEconomy().has(player, money))
 		{
-			EconomyResponse res = FarmWorldMain.getEconomy().withdrawPlayer(player, money);
+			EconomyResponse res = FarmWorldMain.getInstance().getEconomy().withdrawPlayer(player, money);
 			if (res.type != EconomyResponse.ResponseType.SUCCESS)
 			{
 				return false;

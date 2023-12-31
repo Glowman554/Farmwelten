@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import de.glowman554.farmworld.utils.BungeeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -72,10 +73,26 @@ public class FarmworldWorldGUI implements Listener
 		return itemStack;
 	}
 
+	private boolean doCompanion(HumanEntity player, WorldId id, int level) {
+		if (FarmWorldMain.getInstance().getCompanionSupport()) {
+			try {
+				FarmWorldMain.getInstance().getDatabase().scheduleUserTeleport(player.getUniqueId(), id, level);
+				BungeeUtils.sendPlayer((Player) player, "mine");
+			} catch (SQLException e) {
+				FarmWorldMain.getInstance().genericError(player);
+				throw new RuntimeException(e);
+			}
+			return true;
+		}
+		return false;
+	}
+
 	private void doPlayerTeleport(HumanEntity player, WorldId id, int level)
 	{
-		((Player) player).performCommand(id.getTeleportCommands()[level - 1]);
-		player.sendMessage(String.format("§7Erfolgreich nach §eLv%d §aTeleportiert", level));
+		if (!doCompanion(player, id, level)) {
+			((Player) player).performCommand(id.getTeleportCommands()[level - 1]);
+			player.sendMessage(String.format("§7Erfolgreich nach §eLv%d §aTeleportiert", level));
+		}
 		player.closeInventory();
 	}
 

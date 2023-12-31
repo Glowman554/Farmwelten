@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 
+import de.glowman554.farmworld.utils.BungeeUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -27,12 +28,14 @@ public class FarmWorldMain extends JavaPlugin
 
 	private DatabaseConnection database;
 	private FileConfiguration config = getConfig();
-	private static Economy economy;
+	private Economy economy;
 
 	private String rtpHead;
 	private String rtpCommand;
 	private String waterHead;
 	private String waterCommand;
+
+	private boolean companionSupport;
 
 	public void genericError(HumanEntity entity)
 	{
@@ -93,8 +96,11 @@ public class FarmWorldMain extends JavaPlugin
 		config.addDefault("RTP.head", "glowman434");
 		config.addDefault("RTP.command", "/rtp world world");
 
+		config.addDefault("companion_support", false);
+
 		config.options().copyDefaults(true);
 		saveConfig();
+		reloadConfig();
 
 		try
 		{
@@ -119,6 +125,13 @@ public class FarmWorldMain extends JavaPlugin
 		}
 
 		loadWorldConfig();
+
+		companionSupport = config.getBoolean("companion_support");
+
+		if (companionSupport) {
+			BungeeUtils.init();
+			getLogger().log(Level.WARNING, "Enabling companion support (Companion MUST be installed on the server the player gets teleported to!)");
+		}
 	}
 
 	@Override
@@ -156,7 +169,7 @@ public class FarmWorldMain extends JavaPlugin
 		return database;
 	}
 
-	public static Economy getEconomy()
+	public Economy getEconomy()
 	{
 		return economy;
 	}
@@ -179,5 +192,9 @@ public class FarmWorldMain extends JavaPlugin
 	public String getWaterCommand()
 	{
 		return waterCommand;
+	}
+
+	public boolean getCompanionSupport() {
+		return companionSupport;
 	}
 }

@@ -97,4 +97,23 @@ public class MySQLDatabaseConnection implements DatabaseConnection
 			throw new IllegalArgumentException("Player in database not found!");
 		}
 	}
+
+	@Override
+	public void scheduleUserTeleport(UUID uuid, WorldId id, int level) throws SQLException {
+		PreparedStatement st = connect.prepareStatement("replace into scheduledTeleports (uuid, worldLevel, worldId) values (?, ?, ?)");
+		st.setString(1, uuid.toString());
+		st.setInt(2, level);
+		st.setString(3, id.toString());
+		st.execute();
+		st.close();
+	}
+
+	@Override
+	public void scheduleUserTeleport(UUID uuid, String id) throws SQLException {
+		PreparedStatement st = connect.prepareStatement("replace into scheduledTeleports (uuid, worldLevel, worldId) values (?, -1, ?)");
+		st.setString(1, uuid.toString());
+		st.setString(2, id);
+		st.execute();
+		st.close();
+	}
 }

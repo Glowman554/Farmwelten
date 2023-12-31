@@ -11,4 +11,6 @@ public interface DatabaseConnection
 	public void createUserWorldIfNecesarry(UUID uuid, WorldId id) throws SQLException;
 	public void changeUserWorldLevel(UUID uuid, WorldId id, int newLevel) throws SQLException;
 	public int readUserWorldLevel(UUID uuid, WorldId id) throws SQLException;
+	public void scheduleUserTeleport(UUID uuid, WorldId id, int level) throws SQLException;
+	public void scheduleUserTeleport(UUID uuid, String id) throws SQLException;
 }
