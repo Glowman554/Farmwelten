@@ -1,16 +1,20 @@
 package de.glowman554.farmworld.db;
 
+import de.glowman554.farmworld.WorldId;
+
 import java.sql.SQLException;
 import java.util.UUID;
 
-import de.glowman554.farmworld.WorldId;
+public interface DatabaseConnection {
+    void close();
 
-public interface DatabaseConnection
-{
-	public void close();
-	public void createUserWorldIfNecesarry(UUID uuid, WorldId id) throws SQLException;
-	public void changeUserWorldLevel(UUID uuid, WorldId id, int newLevel) throws SQLException;
-	public int readUserWorldLevel(UUID uuid, WorldId id) throws SQLException;
-	public void scheduleUserTeleport(UUID uuid, WorldId id, int level) throws SQLException;
-	public void scheduleUserTeleport(UUID uuid, String id) throws SQLException;
+    void createUserWorldIfNecessary(UUID uuid, WorldId id) throws SQLException;
+
+    void changeUserWorldLevel(UUID uuid, WorldId id, int newLevel) throws SQLException;
+
+    int readUserWorldLevel(UUID uuid, WorldId id) throws SQLException;
+
+    void scheduleUserTeleport(UUID uuid, WorldId id, int level) throws SQLException;
+
+    void scheduleUserTeleport(UUID uuid, String id) throws SQLException;
 }
